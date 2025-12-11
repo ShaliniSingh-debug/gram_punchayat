@@ -1,0 +1,27 @@
+# Created by venv; see https://docs.python.org/3/library/venv.html
+
+# Python cache files
+__pycache__/
+*.py[cod]
+
+# Virtual environments
+venv/
+.env
+
+# IDE configs
+.vscode/
+.idea/
+
+# Logs
+*.log
+
+# Database files (optional)
+*.sqlite3
+*.db
+
+# FastAPI templates/static cache (if any)
+frontend/__pycache__/
+
+# OS files
+.DS_Store
+Thumbs.db
