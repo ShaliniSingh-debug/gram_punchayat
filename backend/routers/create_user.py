@@ -53,9 +53,13 @@ def create_user(request : Request ,
               db.commit()
               db.refresh(new_user)
               return templates.TemplateResponse(
-                            "create_user.html",
-                            {"request": request, "success": "User created successfully!"}
-                            ) 
+                              "create_user.html",
+                              {
+                                  "request": request,
+                                  "success": "User created successfully!",
+                                  "show_login_button": True
+                              }
+                          )
 
 @router.get("/users", response_class=HTMLResponse)
 def create_users_page(request: Request):

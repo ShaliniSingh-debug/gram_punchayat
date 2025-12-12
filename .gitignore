@@ -1,7 +1,7 @@
 # Python cache files
 __pycache__/
 *.py[cod]
-
+.virtual_env/*
 # Backend cache specifically (optional if you want more explicit)
 backend/__pycache__/
 backend/routers/__pycache__/

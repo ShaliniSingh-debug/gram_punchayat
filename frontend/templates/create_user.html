@@ -67,20 +67,31 @@
 
     <h2>Create User</h2>
 
-    <!-- Show messages -->
+    <!-- Error message -->
     {% if error %}
         <p class="error">{{ error }}</p>
     {% endif %}
 
+    <!-- Success message -->
     {% if success %}
         <p class="success">{{ success }}</p>
     {% endif %}
 
+    <!-- Login button only after success -->
+    {% if show_login_button %}
+    <a href="/login">
+        <button style="padding:8px 15px; margin-top:10px; cursor:pointer;">
+            Go to Login
+        </button>
+    </a>
+    {% endif %}
+
+    <!-- Create user form -->
     <form method="post" action="/users">
 
         <input type="text" name="username" placeholder="Enter Username" required>
 
-        <input type="email" name="email" placeholder="Enter Email">
+        <input type="email" name="email" placeholder="Enter Email" required>
 
         <input type="password" name="password" placeholder="Enter Password" required>
 
