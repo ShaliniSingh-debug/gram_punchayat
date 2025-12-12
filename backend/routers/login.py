@@ -1,6 +1,6 @@
 
 import os
-from fastapi import FastAPI, HTTPException, APIRouter, Depends, Request, Cookie
+from fastapi import FastAPI, HTTPException, APIRouter, Depends, Request, Cookie , Form
 from fastapi.security.oauth2 import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
 from ..database import engine,get_db
@@ -13,6 +13,8 @@ from ..config import settings
 from datetime import datetime, timedelta, timezone
 from fastapi.responses import HTMLResponse,RedirectResponse
 from fastapi.templating import Jinja2Templates
+import asyncio
+from fastapi_mail import FastMail, MessageSchema, ConnectionConfig
 
 #secreset key
 SECRETE_KEY = settings.secret_key
@@ -90,8 +92,39 @@ def dashboard(request: Request, current_user: models.User = Depends(get_current_
         }
     )
 
+@router.get("/logout")
+def logout():
+    response = RedirectResponse(url="/login", status_code=302)
+    response.delete_cookie("access_token")
+    return response
 
 
+# -----------------------------
+# Forgot Password
+# -----------------------------
+@router.get("/forgot-password", response_class=HTMLResponse)
+def forgot_password_page(request: Request):
+    return templates.TemplateResponse("forgot_password.html", {"request": request})
 
 
-              
+@router.post("/forgot-password", response_class=HTMLResponse)
+def forgot_password(
+    request: Request,
+    email: str = Form(...),
+    new_password: str = Form(...),
+    db: Session = Depends(get_db)
+):
+    user = db.query(models.User).filter(models.User.email == email).first()
+    if not user:
+        return templates.TemplateResponse(
+            "forgot_password.html",
+            {"request": request, "error": "Email not found"}
+        )
+
+    # Hash the new password
+    user.password = pwd_context.hash(new_password)
+    db.commit()
+
+    response = RedirectResponse(url="/login?reset_success=1", status_code=302)
+    return response
+    
