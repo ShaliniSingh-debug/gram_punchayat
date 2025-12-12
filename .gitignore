@@ -1,0 +1,30 @@
+# Python cache files
+__pycache__/
+*.py[cod]
+.virtual_env/*
+# Backend cache specifically (optional if you want more explicit)
+backend/__pycache__/
+backend/routers/__pycache__/
+backend/schemas/__pycache__/
+
+# Virtual environments
+venv/
+.env
+
+# IDE configs
+.vscode/
+.idea/
+
+# Logs
+*.log
+
+# Database files (optional)
+*.sqlite3
+*.db
+
+# FastAPI templates/static cache (if any)
+frontend/__pycache__/
+
+# OS files
+.DS_Store
+Thumbs.db

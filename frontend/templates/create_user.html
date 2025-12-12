@@ -3,30 +3,107 @@
 <head>
     <meta charset="UTF-8">
     <title>Create User</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            width: 350px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        input {
+            width: 100%;
+            margin: 8px 0;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #bbb;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #343a40;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #212529;
+        }
+
+        .error {
+            color: red;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .success {
+            color: green;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+    </style>
 </head>
+
 <body>
 
-<h2>Create User</h2>
+<div class="container">
 
-<form action="/auth/create-user" method="post">
+    <h2>Create User</h2>
 
-    <label>Username:</label><br>
-    <input type="text" name="username" required><br><br>
+    <!-- Error message -->
+    {% if error %}
+        <p class="error">{{ error }}</p>
+    {% endif %}
 
-    <label>Email:</label><br>
-    <input type="email" name="email" required><br><br>
+    <!-- Success message -->
+    {% if success %}
+        <p class="success">{{ success }}</p>
+    {% endif %}
 
-    <label>Password:</label><br>
-    <input type="password" name="password" required><br><br>
+    <!-- Login button only after success -->
+    {% if show_login_button %}
+    <a href="/login">
+        <button style="padding:8px 15px; margin-top:10px; cursor:pointer;">
+            Go to Login
+        </button>
+    </a>
+    {% endif %}
 
-    <label>First Name:</label><br>
-    <input type="text" name="first_name" required><br><br>
+    <!-- Create user form -->
+    <form method="post" action="/users">
 
-    <label>Last Name:</label><br>
-    <input type="text" name="last_name" required><br><br>
+        <input type="text" name="username" placeholder="Enter Username" required>
 
-    <button type="submit">Create User</button>
-</form>
+        <input type="email" name="email" placeholder="Enter Email" required>
+
+        <input type="password" name="password" placeholder="Enter Password" required>
+
+        <input type="text" name="first_name" placeholder="Enter First Name">
+
+        <input type="text" name="last_name" placeholder="Enter Last Name">
+
+        <button type="submit">Create User</button>
+
+    </form>
+
+</div>
 
 </body>
 </html>
